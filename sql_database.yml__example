@@ -1,0 +1,30 @@
+auto_compile_prod_from_stage_target: False
+lab:
+  sources:
+    sql_database:
+      credentials:
+        drivername: "mssql+pymssql"
+        database: ""
+        username: ""
+        password: "{{EL-SCM-LAB--DLT-DEMO-PASSWORD}}"
+        host: ""
+        port: 1433
+      sql_tables:
+        - table_name: my_table_name
+          schema_name: my_schema_name
+          chunk_size: 10_000
+          is_incremental: False
+          cursor_field: 
+          initial_value: 
+          end_value: 
+
+  destination:
+    filesystem:
+      layout: "{table_name}/{table_name}_{load_id}_{file_id}.{ext}"
+      bucket_url: "{{DLT_BUCKET_URL}}"
+      region_code: ee
+      application_data_source_code: my_source_code
+      business_domain_code: scm
+      confidentiality_tag:
+      kwargs: {"auto_mkdir": true}
+      schema_contract: add_new_column
